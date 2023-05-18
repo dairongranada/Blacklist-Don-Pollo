@@ -15,20 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from blacklist.api import urls
+from list.api import urls
 from config import settings
-from blacklist import views
+from list import views
 admin.site.site_header = 'BLACKLIST'
 admin.site.index_title = 'VISTA ADMINISTRADOR'
 admin.site.site_title = 'BLACKLIST'
 
 urlpatterns = [
-    # path('jet/', include('jet.urls','jet')),  # Django JET URLS
 
     path('admin/', admin.site.urls),
-    # path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('blacklist.api.urls')),
-    path('web/', include('blacklist.urls')),
+    path('api/', include('list.api.urls')),
+    path('web/', include('list.urls')),
     path('', include('django.contrib.auth.urls')), #autenticacion por sesion
     path('', views.home, name='home'),
 ]

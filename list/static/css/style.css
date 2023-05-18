@@ -12,6 +12,18 @@
 }
 
 
+.dz-error-message span{
+    display: none;
+    position: absolute;
+}
+
+
+.dz-error-message span{
+    display: none;
+    position: absolute;
+    background-color: transparent;
+}
+
 #linebar{
     top: 16rem;
     height: 32px;

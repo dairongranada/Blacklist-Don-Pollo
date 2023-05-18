@@ -19,10 +19,11 @@ let uploadButton = document.getElementById("upload-button");
 let fileFlag = 0;
 
 
+
+
 function download(url) {
     window.location.replace(`${baseUrl}${url.replace('media','media_files')}`)
 }
-
 
 fileInput.addEventListener("click", () => {
     fileInput.value = '';
@@ -85,6 +86,7 @@ removeFileButton.addEventListener("click", () => {
 });
 
 
+
 uploadButton.addEventListener("click", () => {
 
     let isFileUploaded = fileInput.value;
@@ -96,7 +98,6 @@ uploadButton.addEventListener("click", () => {
 
         let fd = new FormData()
         fd.append('employees', fileInput.files[0])
-        log
         console.log(fd)
 
         $.ajax({
