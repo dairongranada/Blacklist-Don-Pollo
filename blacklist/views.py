@@ -25,3 +25,6 @@ def consult_lists(request):
 def report_CyC(request):
     return render(request, 'report_C&C.html')
 
+@login_required(login_url='/login/')
+def addList(request):
+    return render(request, 'addList.html')

@@ -21,6 +21,9 @@
     position: fixed;
     left: -31.4rem;
     filter: brightness(0);
+    overflow-x: hidden;
+    transition: .5s;
+    overflow-y: hidden;
 }
 
 #consult_page{
@@ -30,9 +33,6 @@
     width: 310px;
 }
 
-#report_page{
-    font-size:14.5px;
-}
 
 .span_coincidencias{
     margin-left:1.8rem;
@@ -71,7 +71,6 @@ nav {
     background-color: #000;
     overflow-x: hidden;
     transition: 0.5s;
-    font-size: 12px;
   
 }
 
@@ -79,7 +78,7 @@ nav {
 .sidenav a {
     padding: 8px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     color: #f9f9f9;
     display: block;
     transition: 0.3s;

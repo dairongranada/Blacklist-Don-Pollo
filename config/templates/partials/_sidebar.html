@@ -1,7 +1,7 @@
 {% load static %}
 {% load helpers %}
 <div id="mySidenav" class="sidenav">
-    <div class="header px-3 mb-4 mt-4">
+    <div class="header px-3 mb-6 mt-4" style="margin-bottom: 40px;" >
         <img src="{% static '/img/logo.png' %}"  width="110">
     </div>
 
@@ -10,6 +10,10 @@
             href="{% url  'home' %}"><i class="fa-solid fa-house-chimney"></i> Inicio</a>
         </li>
 
+
+        <li class="nav-item mx-2"><a id="home_page" class="nav-link" aria-current="page" 
+            href="{% url  'addList' %}"><i class="fa-solid fa-user-plus"></i></i> Agregar </a>
+        </li>
 
         <li class="nav-item mx-2 ">
             <a id="consult_page" class="nav-link fw-bold" data-bs-toggle="collapse" href="#services-nomina" role="button" aria-expanded="false" aria-controls="services-nomina"><i class="fa-solid fa-list"></i> Consultas</a>
@@ -29,9 +33,8 @@
             href="{% url  'report_CyC' %}">
             <i class="fa-solid fa-calendar-days"></i>
 
-            </i>Reporte consultas & <span class="span_coincidencias" >Coincidencias</span></a>
+            </i>Reporte consultas & Coincidencias</span></a>
         </li>
     </ul>
-    <img id="linebar" src="{% static '/img/line.svg' %}" alt="">
 </div>
 
