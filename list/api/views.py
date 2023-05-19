@@ -28,9 +28,6 @@ def employee_list(request):
     return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)
 
 
-
-
-
 @api_view(['POST'])
 @parser_classes([MultiPartParser])
 def employees_imported(request):
@@ -77,7 +74,6 @@ def employees_imported(request):
 
 
 
-
 @api_view(['GET'])
 def individual_consultation(request,pk):
 
@@ -89,4 +85,32 @@ def individual_consultation(request,pk):
             return JsonResponse(query_res, safe=False)
 
     return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)
+
+
+
+@api_view(['GET'])
+def queries_coincidences(request, fecha_inicio, fecha_fin):
+
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute(f"""  
+                SELECT * FROM list_emp
+                WHERE withdrawal_date >= '{fecha_inicio}' AND withdrawal_date <= '{fecha_fin}';
+            """)
+            query_res = dictfetchall(cursor)
+
+            return JsonResponse(query_res, safe=False)
+
+    return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)
+
+
+
+
+
+
+
+
+
+
+
 
