@@ -1,3 +1,5 @@
+import pandas as pd
+import csv
 from rest_framework.decorators import api_view
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.db import connection
@@ -11,6 +13,7 @@ from django.core.files.storage import FileSystemStorage
 from list.models  import list_emp
 from list.serializers import serializersAddList
 
+from datetime import datetime
 
 @api_view(['GET'])
 @parser_classes([MultiPartParser])
@@ -30,27 +33,44 @@ def employee_list(request):
 
 @api_view(['POST'])
 @parser_classes([MultiPartParser])
-def employees_concepts_imported(request):
+def employees_imported(request):
     """ Import employees for convert in SIESA FILE """
-                                   
 
-    #Solo el elaborador puede cargar archivos
+    existing_records = 0
+
+                                   
     if request.method == 'POST':
         
-        uploaded_file = request.FILES['concepts']
+        uploaded_file = request.FILES['COLABORADORES']
+      
+        dataframe = pd.read_excel(uploaded_file)
 
-        # tamaño del archivo en MB
-        file_size = round(uploaded_file.size/1048576, 2)
+        for _, row in dataframe.iterrows():
+            print(row)
+            iden = row['CEDULA']
+            name = row['NOMBRE EMPLEADO EX-EMPLEADO']
+            with_date = row['FECHA DE RETIRO']
+            observ = row['OBSERVACIONES']
+            avan = row['AVANCE']
+            # ceo = row['VALIDACIÓN CEO']
 
-        if (uploaded_file.content_type != 'text/csv'):
 
-            return JsonResponse([{"error": "Solo se admiten archivos en formato csv"}], status=400, safe=False)
-        if (file_size > 5):
 
-            return JsonResponse([{"error": "El tamaño del archivo supera los 5 MB"}], status=400, safe=False)
+            existing_records = list_emp.objects.filter(
+                identification = iden, name = name, observations = observ, avance = avan).count()
+            
+            if existing_records == 0:
+                
+                list_emp.objects.create(
+                    identification = iden, 
+                    name = name,
+                    withdrawal_date = with_date,
+                    observations = observ,
+                    avance = avan
+                )
+                
+        if existing_records >= 1:
+            return JsonResponse({"warning":True,'msg':'Aparecer habían ex empleados repetidos y solo se guardaron los que no estaban en la base de datos'}, status=200, safe=False)
+        return JsonResponse({"warning":False, 'msg':'Ex Empleados Guardados Correctamente'}, status=200, safe=False)
 
-        fs = FileSystemStorage()
-
-        
-        return JsonResponse(data, safe=False)
     return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)

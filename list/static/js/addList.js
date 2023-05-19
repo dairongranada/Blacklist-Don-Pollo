@@ -28,8 +28,12 @@ $(document).ready(function () {
 
 
 
+const downloadExcel = () =>{
 
+    // FALTA HACER EL DESCARGARDOR DE LA PLANTILLA 
+    // (no importante pero necesario)
 
+}
 
 
 
@@ -161,15 +165,16 @@ uploadButton.addEventListener("click", () => {
           type: "POST",
           contentType: 'multipart/form-data',
           headers: { "Accepts": "text/plain; charset=utf-8", "X-CSRFToken": getCookie('csrftoken') },
-          url: `${baseUrl}/`,
+          url: `${baseUrl}/api/cargar-excel/`,
           processData: false, 
           contentType: false,
           data: fd,
       }).done(function (data) {
+        console.log(data);
           Swal.fire({
-              title: 'Éxito',
-              text: "El archivo se ha procesado satisfactoriamente",
-              icon: 'success',
+              title: data.warning == true ? 'warning' :'Exito',
+              text:  data.msg, 
+              icon: data.warning == true ? 'warning' :'success',
               confirmButtonColor: '#3085d6',
               confirmButtonText: 'Ok',
               allowOutsideClick: false
