@@ -88,9 +88,8 @@ function openNav() {
     var isOpenSidebar = localStorage.getItem('isOpenSidebar')
 
     if (!isOpenSidebar) {
-        document.getElementById("linebar").style.left = "-31rem";
         document.getElementById("mySidenav").style.left = "0px";
-        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("main").style.marginLeft = "260px";
         localStorage.setItem('isOpenSidebar', true)
     } else {
         closeNav()
@@ -99,8 +98,7 @@ function openNav() {
 
 /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 function closeNav() {
-    document.getElementById("linebar").style.left = "-2000rem";
-    document.getElementById("mySidenav").style.left = "-250px";
+    document.getElementById("mySidenav").style.left = "-260px";
     document.getElementById("main").style.marginLeft = "0";
     localStorage.removeItem('isOpenSidebar')
 }

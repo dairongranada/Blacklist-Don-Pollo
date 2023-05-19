@@ -74,3 +74,19 @@ def employees_imported(request):
         return JsonResponse({"warning":False, 'msg':'Ex Empleados Guardados Correctamente'}, status=200, safe=False)
 
     return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)
+
+
+
+
+@api_view(['GET'])
+def individual_consultation(request,pk):
+
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM list_emp WHERE identification = {pk};")
+            query_res = dictfetchall(cursor)
+
+            return JsonResponse(query_res, safe=False)
+
+    return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)
+
