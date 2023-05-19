@@ -1,10 +1,10 @@
 from rest_framework import serializers
-# from .models import 
+from .models import list_emp
 
 
-# class Name(serializers.ModelSerializer):
+class serializersAddList(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = Name
-#         fields = '__all__'
+    class Meta:
+        model = list_emp
+        fields = '__all__'
 

@@ -11,52 +11,16 @@ $(document).ready(function () {
             dataSrc: "",
         },
         "columns": [         
-            { "data": "name" },
             { "data": "identification" },
-            {
-                "data": null,
-                "render": function (data) {
-                    return `${data.job_title_name}`
-
-                }
-            },
-            {
-                "data": null,
-                "render": function (data) {
-                    return `${data.cost_center_description}`
-                }
-            },
-            {
-                "data": null,
-                "render": function (data) {
-                    let output = ''
-                    // output += `<a style='background-color:#FF9D00' class='btn rounded-circle me-2'title='...' 
-                    //                 href="${baseUrl}/web/employee_form/${data.id}">
-                    //                 <i class="fa-solid fa-eye"></i>
-                    //              </a>`;
-                    output += `<a class='btn btn-success rounded-circle me-2' title='Editar Empleado' 
-                                        href="${baseUrl}/web/employee_form/${data.id}">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>`;
-
-                    if (data.is_active == 0) {
-                        output += `<buttom class='btn btn-danger rounded-circle' title='Empleado Inactivo' >
-                            <i class="fa-solid fa-ban"></i>
-                        </buttom>`;
-                    }else{
-                        output += `<buttom class='btn btn-primary rounded-circle' title='Empleado Activo' 
-                                        onclick="deleteEmpleado('${data.id}')">
-                                        <i style="font-size: 12px;"  class="fa-sharp fa-solid fa-user-shield"></i>
-                                    </buttom>`;
-                    }
+            { "data": "name" },
+            { "data": "withdrawal_date" },
+            { "data": "observations" },
+            { "data": "avance" },
 
 
-                    return output; 
-                }
-            },
      
         ],
-        "pageLength": 6,
+        "pageLength": 3,
         "order": [[0, "desc"]],
     });
 });
@@ -188,8 +152,10 @@ uploadButton.addEventListener("click", () => {
       removeFileButton.style.cssText = "display: none;";
 
       let fd = new FormData()
-      fd.append('employees', fileInput.files[0])
-      console.log(fd)
+
+
+      fd.append('COLABORADORES', fileInput.files[0])
+      console.log(isFileUploaded)
 
       $.ajax({
           type: "POST",
