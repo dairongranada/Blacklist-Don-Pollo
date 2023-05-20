@@ -1,9 +1,3 @@
-const downloadExcel = () =>{
-
-    // FALTA HACER EL DESCARGARDOR DE LA PLANTILLA 
-    // (no importante pero necesario)
-
-}
 var isAdvancedUpload = function () {
   var div = document.createElement('div');
   return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
@@ -103,7 +97,7 @@ uploadButton.addEventListener("click", () => {
       let fd = new FormData()
 
 
-      fd.append('COLABORADORES', fileInput.files[0])
+      fd.append('LISTA_INTERNA', fileInput.files[0])
       console.log(isFileUploaded)
 
       $.ajax({
@@ -137,6 +131,9 @@ uploadButton.addEventListener("click", () => {
           var status = data.status
           var text = 'Ha ocurrido un error'
 
+
+          console.log(res);
+
           if (status === 500) {
               text = 'Ha ocurrido un error inesperado, por favor contactar a soporte'
           } else if (status === 403 || status === 401) {
@@ -163,4 +160,33 @@ uploadButton.addEventListener("click", () => {
 });
 
 
+
+
+
+const generarDatos = () => {
+
+    let infodateexport = [
+        ["CEDULA", "NOMBRE EMPLEADO EX-EMPLEADO", "FECHA DE RETIRO", "OBSERVACIONES", 'AVANCE'],
+    ]
+
+    return infodateexport;
+}
+
+
+const generarExcel = (validate) => {
+
+    if(validate){
+        /* Crear el archivo Excel */
+        var wb = XLSX.utils.book_new();
+        var ws = XLSX.utils.aoa_to_sheet(generarDatos());
+        XLSX.utils.book_append_sheet(wb, ws, `LISTA_INTERNA`);
+      
+        /* Descargar el archivo Excel */
+        var nombreArchivo = `LISTA_INTERNA.xlsx`;
+        XLSX.writeFile(wb, nombreArchivo);
+    }else{
+        Swal.fire('¡Advertencia!', 'Al parecer no hay ninguna información con las fechas ingresadas ', 'warning');
+    }
+
+}
 

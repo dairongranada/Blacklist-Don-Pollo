@@ -1,17 +1,16 @@
 import pandas as pd
 import csv
 from rest_framework.decorators import api_view
-from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponse
 from django.db import connection
 
 from list.utils import dictfetchall
 from rest_framework.parsers import MultiPartParser
 from rest_framework.decorators import parser_classes
-from django.core.files.storage import FileSystemStorage
 
 
 from list.models  import list_emp
-from list.serializers import serializersAddList
+from list.serializers import serializersAddList, serializerslistRecord
 
 from datetime import datetime
 
@@ -19,7 +18,7 @@ from datetime import datetime
 @parser_classes([MultiPartParser])
 def employee_list(request):
     """
-    List all employees, or create a new employee.
+    List all employees
     """
     if request.method == 'GET':
         records = list_emp.objects.all()
@@ -31,19 +30,19 @@ def employee_list(request):
 @api_view(['POST'])
 @parser_classes([MultiPartParser])
 def employees_imported(request):
-    """ Import employees for convert in SIESA FILE """
+    """
+    create a new employee.
+    """
 
     existing_records = 0
 
-                                   
     if request.method == 'POST':
         
-        uploaded_file = request.FILES['COLABORADORES']
+        uploaded_file = request.FILES['LISTA_INTERNA']
       
         dataframe = pd.read_excel(uploaded_file)
 
         for _, row in dataframe.iterrows():
-            print(row)
             iden = row['CEDULA']
             name = row['NOMBRE EMPLEADO EX-EMPLEADO']
             with_date = row['FECHA DE RETIRO']
@@ -53,11 +52,9 @@ def employees_imported(request):
 
 
 
-            existing_records = list_emp.objects.filter(
-                identification = iden, name = name, observations = observ, avance = avan).count()
+            existing_records = list_emp.objects.filter(identification = iden, name = name).count()
             
             if existing_records == 0:
-                
                 list_emp.objects.create(
                     identification = iden, 
                     name = name,
@@ -94,8 +91,8 @@ def queries_coincidences(request, fecha_inicio, fecha_fin):
     if request.method == 'GET':
         with connection.cursor() as cursor:
             cursor.execute(f"""  
-                SELECT * FROM list_emp
-                WHERE withdrawal_date >= '{fecha_inicio}' AND withdrawal_date <= '{fecha_fin}';
+                SELECT * FROM list_emp emp INNER JOIN queries_and_coincidences qc ON emp.id = qc.employee_id 
+                WHERE qc.consultation_date >= '{fecha_inicio}' AND qc.consultation_date <= '{fecha_fin}';
             """)
             query_res = dictfetchall(cursor)
 
@@ -106,6 +103,46 @@ def queries_coincidences(request, fecha_inicio, fecha_fin):
 
 
 
+@api_view(['POST'])
+@parser_classes([MultiPartParser])
+def employee_mass_query(request):
+
+    existing_employees = []
+    non_existent_employees = []
+
+    if request.method == 'POST':
+        
+        uploaded_file = request.FILES['LISTA_INTERNA']
+        dataframe = pd.read_excel(uploaded_file)
+
+        for _, row in dataframe.iterrows():
+            iden = row['CEDULA']
+            name = row['NOMBRE EMPLEADO EX-EMPLEADO']
+            with_date = row['FECHA DE RETIRO']
+            observ = row['OBSERVACIONES']
+            avan = row['AVANCE']
+
+            try:
+                employee = list_emp.objects.get(identification=iden)
+                existing_employees.append({
+                    "identification" : iden,
+                    "name" : name,
+                    "with_date": with_date,
+                    "observation" : observ,
+                    "avance" : avan,
+                }) 
+            except list_emp.DoesNotExist:
+                non_existent_employees.append({
+                    "identification" : iden,
+                    "name" : name,
+                    "with_date": with_date,
+                    "observation" : observ,
+                    "avance" : avan,
+                })
+                
+        return JsonResponse({"warning":False, 'non_existent_employees':non_existent_employees,  'existing_employees':existing_employees,  'msg':'Datos generados correctamente'}, status=200, safe=False)
+
+    return JsonResponse([{"error": "No autorizado"}], status=401, safe=False)
 
 
 

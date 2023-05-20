@@ -6,5 +6,6 @@ urlpatterns = [
     path('cargar-excel/', views.employees_imported),
     path('individual_consultation/<int:pk>', views.individual_consultation),
     path('queries_coincidences/<str:fecha_inicio>/<str:fecha_fin>', views.queries_coincidences),
+    path('mass_query', views.employee_mass_query),
 
 ]

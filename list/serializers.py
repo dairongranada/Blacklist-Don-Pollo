@@ -8,3 +8,9 @@ class serializersAddList(serializers.ModelSerializer):
         model = list_emp
         fields = '__all__'
 
+# -- PUT de Herramientas 
+class serializerslistRecord(serializers.ModelSerializer):
+    
+    class Meta:
+        model = list_emp
+        fields = ["record"]

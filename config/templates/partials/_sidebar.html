@@ -6,10 +6,15 @@
     </div>
 
     <ul class="navbar-nav mb-2 px-3 gap-2">
+
         <li class="nav-item mx-2"><a id="home_page" class="nav-link" aria-current="page" 
             href="{% url  'home' %}"><i class="fa-solid fa-house-chimney"></i> Inicio</a>
         </li>
 
+        <li class="nav-item mx-2"><a id="report_page" class="nav-link" aria-current="page" 
+            href="/admin"><i class="fa-solid fa-user-shield"></i>
+            </i>Admin</span></a>
+        </li>
 
         <li class="nav-item mx-2"><a id="home_page" class="nav-link" aria-current="page" 
             href="{% url  'addList' %}"><i class="fa-solid fa-user-plus"></i></i> Agregar </a>
@@ -21,10 +26,10 @@
             <div class="collapse" id="services-nomina">
                 <ul class="nested-list">
                     <li class="nav-item mx-2"><a id="list_page" class="nav-nested-link fs-6 fw-light" aria-current="page" 
-                        href="{% url  'mass_query' %}"></i> Consulta Masiva</a></li>
+                        href="{% url  'mass_query' %}"></i>- Consulta Masiva</a></li>
             
                     <li class="nav-item mx-2"><a id="list_page" class="nav-nested-link fs-6 fw-light" aria-current="page"
-                        href="{% url  'consult_lists' %}"></i> Consultar individual</a></li>
+                        href="{% url  'consult_lists' %}"></i>- Consulta Individual</a></li>
                 </ul>
             </div>
         </li>
@@ -35,6 +40,7 @@
 
             </i>Reporte consultas & Coincidencias</span></a>
         </li>
+
     </ul>
 </div>
 

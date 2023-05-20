@@ -17,3 +17,10 @@ class list_emp(models.Model):
     class Meta:
         db_table = 'list_emp'
 
+class Queries_and_Coincidences(models.Model):
+    employee = models.ForeignKey(list_emp, on_delete=models.RESTRICT)
+    consultation_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Reporte Consultas & Conincidencias"
+        db_table = 'Queries_and_Coincidences'

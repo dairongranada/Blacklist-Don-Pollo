@@ -16,6 +16,7 @@ $("#btn_delivery").click(function() {
             url: `${baseUrl}/api/queries_coincidences/${$('#picker_date_start').val()}/${$('#picker_date_end').val()}`,
 
         }).done(function (data) {
+            deliveriesBy = []
             deliveriesBy.push(data)
             data.length >=1 ? validate = true : validate = false;
             
@@ -72,7 +73,7 @@ const record_listing = (data) => {
             { "data": "avance" },
      
         ],
-        "pageLength": 30,
+        "pageLength": 5,
         "order": [[0, "desc"]],
     });
     generarDatos()
