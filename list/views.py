@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
-# from .models import 
+
+
 
 @login_required(login_url='/login/')
 def index(request):
@@ -28,3 +29,5 @@ def report_CyC(request):
 @login_required(login_url='/login/')
 def addList(request):
     return render(request, 'addList.html')
+
+

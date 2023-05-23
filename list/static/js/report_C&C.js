@@ -87,19 +87,37 @@ const record_listing = (data) => {
 const generarDatos = () => {
 
     let infodateexport = [
-        ["CEDULA", "NOMBRE EMPLEADO EX-EMPLEADO", "FECHA DE RETIRO", "OBSERVACIONES", 'AVANCE'],
+        ["FECHA DE CONSULTA","COINCIDENCIA","CEDULA", "NOMBRE EMPLEADO EX-EMPLEADO", "FECHA DE RETIRO", "OBSERVACIONES", 'AVANCE'],
     ]
 
     console.log(deliveriesBy);
     deliveriesBy.map(data => {
+        
         data.map(elemt => {
-            infodateexport.push([
-                elemt.identification,
-                elemt.name,
-                elemt.withdrawal_date,
-                elemt.observations,
-                elemt.avance
-            ])
+            if (elemt.record === 1) {
+                let valdate = elemt.consul_date.split('T')
+                console.log(valdate);
+                infodateexport.push([
+                    valdate[0],
+                    "TUVO COINCIDENCIA",
+                    elemt.identification,
+                    elemt.name,
+                    elemt.withdrawal_date,
+                    elemt.observations,
+                    elemt.avance
+                ])                
+            }else{
+                infodateexport.push([
+                    valdate[0],
+                    "NO TUVO COINCIDENCIA",
+                    elemt.identification,
+                    elemt.name,
+                    elemt.withdrawal_date,
+                    elemt.observations,
+                    elemt.avance
+                ])  
+            }
+
         });    
     });
 
@@ -113,10 +131,10 @@ const generarExcel = (validate) => {
         /* Crear el archivo Excel */
         var wb = XLSX.utils.book_new();
         var ws = XLSX.utils.aoa_to_sheet(generarDatos());
-        XLSX.utils.book_append_sheet(wb, ws, `Entregas por Elemento`);
+        XLSX.utils.book_append_sheet(wb, ws, `Reporte`);
       
         /* Descargar el archivo Excel */
-        var nombreArchivo = `Entregasde${deliveriesNameElement}.xlsx`;
+        var nombreArchivo = `Reporte Consultas & Conincidencias.xlsx`;
         XLSX.writeFile(wb, nombreArchivo);
     }else{
         Swal.fire('¡Advertencia!', 'Al parecer no hay ninguna información con las fechas ingresadas ', 'warning');

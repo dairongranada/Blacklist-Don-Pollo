@@ -163,30 +163,37 @@ uploadButton.addEventListener("click", () => {
 
 
 
+// $('#downloadExcel').click(function() {
+//     // Redireccionar al archivo PDF en Django
+//     window.location.href = 'api/descargar-archivo/archivo_nombre';
+// })
+
+
 const generarDatos = () => {
 
     let infodateexport = [
-        ["CEDULA", "NOMBRE EMPLEADO EX-EMPLEADO", "FECHA DE RETIRO", "OBSERVACIONES", 'AVANCE'],
+        ["CEDULA", "NOMBRE EMPLEADO EX-EMPLEADO"],
     ]
 
+
+        infodateexport.push([
+            "00000000000",
+            "Nombre Completo",
+
+        ])                
     return infodateexport;
 }
 
+const generarExcel = () => {
 
-const generarExcel = (validate) => {
-
-    if(validate){
-        /* Crear el archivo Excel */
-        var wb = XLSX.utils.book_new();
-        var ws = XLSX.utils.aoa_to_sheet(generarDatos());
-        XLSX.utils.book_append_sheet(wb, ws, `LISTA_INTERNA`);
-      
-        /* Descargar el archivo Excel */
-        var nombreArchivo = `LISTA_INTERNA.xlsx`;
-        XLSX.writeFile(wb, nombreArchivo);
-    }else{
-        Swal.fire('¡Advertencia!', 'Al parecer no hay ninguna información con las fechas ingresadas ', 'warning');
-    }
+    /* Crear el archivo Excel */
+    var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.aoa_to_sheet(generarDatos());
+    XLSX.utils.book_append_sheet(wb, ws, `Entregas por Elemento`);
+    
+    /* Descargar el archivo Excel */
+    var nombreArchivo = `Entregasde${deliveriesNameElement}.xlsx`;
+    XLSX.writeFile(wb, nombreArchivo);
 
 }
-
+  

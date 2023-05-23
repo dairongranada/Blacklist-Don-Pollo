@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import list_emp
+from .models import list_emp, Queries_and_Coincidences
 
 
 class serializersAddList(serializers.ModelSerializer):
@@ -8,9 +8,11 @@ class serializersAddList(serializers.ModelSerializer):
         model = list_emp
         fields = '__all__'
 
-# -- PUT de Herramientas 
-class serializerslistRecord(serializers.ModelSerializer):
-    
+
+
+
+class CoincidencesSerializers(serializers.ModelSerializer):
+
     class Meta:
-        model = list_emp
-        fields = ["record"]
+        model = Queries_and_Coincidences
+        fields = ['employee','consul_date','record']  

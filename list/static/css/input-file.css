@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 
+#downloadExcel{
+	color: #f7fff7;
+}
+
 .upload-files-container {
     background-color: #f7fff7;
     width: 100%;
