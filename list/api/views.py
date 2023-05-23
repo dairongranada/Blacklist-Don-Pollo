@@ -141,16 +141,24 @@ def employee_mass_query(request):
                     serializer.save()
 
             except list_emp.DoesNotExist:
-                employeeNot = list_emp.objects.get(identification=iden, coincidences=0)
+                try:
+                    employee = list_emp.objects.get(identification=iden, coincidences=0)
 
-                print()
-                print()
-                print()
-                print(employeeNot)
-                print()
-                if employeeNot:
-                    none_funtion = True
-                else:
+                    non_existent_employees.append({
+                    "identification" : iden,
+                    "name" : employee.name,
+                    # "with_date": employee.withdrawal_date,
+                    # "observation" : employee.observations,
+                    # "avance" : employee.avance,
+                    })
+                    
+                    data = { "employee": employee.id, "consul_date":datetime.now(), "record": False }
+
+                    serializer = CoincidencesSerializers(data = data)
+                    if serializer.is_valid():
+                        serializer.save()
+
+                except list_emp.DoesNotExist:
                     list_emp.objects.create(
                         identification = iden, 
                         name = name, 
@@ -159,14 +167,7 @@ def employee_mass_query(request):
                         avance = None,
                         coincidences = False
                     )
-
-                non_existent_employees.append({
-                    "identification" : iden,
-                    "name" : name,
-                    # "with_date": with_date,
-                    # "observation" : observ,
-                    # "avance" : avan,
-                })
+                
 
                 
         return JsonResponse({"warning":False, 'non_existent_employees':non_existent_employees,  'existing_employees':existing_employees,  'msg':'Datos generados correctamente'}, status=200, safe=False)
