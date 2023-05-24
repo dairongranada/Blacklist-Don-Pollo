@@ -3,18 +3,19 @@ from django.db import models
 
 class list_emp(models.Model):
     
-    coincidences = models.BooleanField(default=True, verbose_name='Tiene coincidencias si / no')
     identification = models.CharField(max_length=100, verbose_name='Identificación')
-    name = models.CharField(max_length=100, verbose_name='Nombre')
+    name = models.CharField(max_length=100, verbose_name='Nombre Completo')
     observations = models.TextField(null=True, blank=True, verbose_name='observaciones')
     withdrawal_date = models.DateField(null=True, verbose_name='Fecha de retiro')
     avance = models.CharField(null=True, max_length=255, verbose_name='avance')
+    coincidences = models.BooleanField(default=True, verbose_name='Tiene coincidencias si / no')
 
     
     def __str__(self) -> str:
         return f'{self.name}'
 
     class Meta:
+        verbose_name_plural = "Lista de ex empleados"
         db_table = 'list_emp'
 
 

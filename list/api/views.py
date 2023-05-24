@@ -177,22 +177,22 @@ def employee_mass_query(request):
 
 
 
-class DescargarArchivoAPI(View):
-    def get(self, request, archivo_nombre):
-        # Obtener la ruta completa al archivo
-        archivo_ruta = os.path.join('media', archivo_nombre)
+# class DescargarArchivoAPI(View):
+#     def get(self, request, archivo_nombre):
+#         # Obtener la ruta completa al archivo
+#         archivo_ruta = os.path.join('media', archivo_nombre)
         
-        # Verificar si el archivo existe
-        if os.path.exists(archivo_ruta):
-            # Abrir el archivo en modo binario
-            with open(archivo_ruta, 'rb') as archivo:
-                # Crear una respuesta de archivo y especificar el tipo de contenido
-                response = FileResponse(archivo)
-                response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
-                return response
-        else:
-            # Manejar caso de archivo no encontrado
-            return HttpResponseNotFound('Archivo no encontrado')
+#         # Verificar si el archivo existe
+#         if os.path.exists(archivo_ruta):
+#             # Abrir el archivo en modo binario
+#             with open(archivo_ruta, 'rb') as archivo:
+#                 # Crear una respuesta de archivo y especificar el tipo de contenido
+#                 response = FileResponse(archivo)
+#                 response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
+#                 return response
+#         else:
+#             # Manejar caso de archivo no encontrado
+#             return HttpResponseNotFound('Archivo no encontrado')
 
 
 

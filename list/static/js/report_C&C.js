@@ -85,6 +85,7 @@ const record_listing = (data) => {
 
 
 const generarDatos = () => {
+    let valdate = null
 
     let infodateexport = [
         ["FECHA DE CONSULTA","COINCIDENCIA","CEDULA", "NOMBRE EMPLEADO EX-EMPLEADO", "FECHA DE RETIRO", "OBSERVACIONES", 'AVANCE'],
@@ -95,7 +96,7 @@ const generarDatos = () => {
         
         data.map(elemt => {
             if (elemt.record === 1) {
-                let valdate = elemt.consul_date.split('T')
+                valdate = elemt.consul_date.split('T')
                 console.log(valdate);
                 infodateexport.push([
                     valdate[0],
